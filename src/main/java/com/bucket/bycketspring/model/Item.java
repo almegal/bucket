@@ -21,7 +21,13 @@ public class Item {
     public int hashCode(){
         return Objects.hash(ID, productName);
     }
-
+    @Override
+    public boolean equals(Object other){
+      boolean isInstance = this.getClass() == other.getClass();
+      if(!isInstance) return false;
+      Item item = (Item) other;
+      return this.getID() == item.getID();
+    };
     public int getID() {
         return ID;
     }
