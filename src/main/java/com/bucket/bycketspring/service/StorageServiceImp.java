@@ -1,17 +1,16 @@
 package com.bucket.bycketspring.service;
 
-import com.bucket.bycketspring.error.ExceprionIncorrectIdParametr;
-import com.bucket.bycketspring.model.Item;
+import com.bucket.bycketspring.error.ExceptionIncorrectIDParametr;
 import com.bucket.bycketspring.model.Storage;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
-@Scope("session")
-public class StorageServiceImp implements StorageService<Item>{
+@SessionScope
+public class StorageServiceImp implements StorageService {
     private final Storage storage;
 
     public StorageServiceImp(Storage storage) {
@@ -19,30 +18,25 @@ public class StorageServiceImp implements StorageService<Item>{
     }
 
     @Override
-    public Item add(int ID, String productName) {
-        final Item item = new Item(ID, productName);
-        final String convertID = convertID(ID);
-
-        return storage.add(convertID, item);
+    public Map<String, Integer> add(List<Long> ids) {
+        ids.forEach(id -> {
+            String key = convertID(id);
+            storage.add(key);
+        });
+        return getUsersStorage();
     }
 
     @Override
-    public Item get(int ID) {
-        final String convertID = convertID(ID);
-        return storage.get(convertID);
+    public Map<String, Integer> getUsersStorage() {
+        return storage.getUsersStorage();
     }
 
-    @Override
-    public Map<String, Item> all() {
-        return storage.getStorage();
-    }
-
-    private String convertID(int ID) {
+    private String convertID(Long ID) {
         String convertID;
         try {
             convertID = String.valueOf(ID);
         } catch (Exception e) {
-            throw new ExceprionIncorrectIdParametr("The ID parametr connot be converted to string");
+            throw new ExceptionIncorrectIDParametr("The ID parametr connot be converted to string");
         }
         return convertID;
     }

@@ -1,24 +1,27 @@
 package com.bucket.bycketspring.model;
 
-import org.springframework.context.annotation.Scope;
+import com.bucket.bycketspring.error.ExceptionIncorrectIDParametr;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.event.ItemEvent;
+import java.util.*;
 
 @Repository
-@Scope("session")
+@SessionScope
 public class Storage {
-    private final Map<String, Item> storage = new HashMap<>();
+    private final Map<String, Integer> storage;
 
-    public Map<String, Item> getStorage() {
+    public Storage() {
+        this.storage = new HashMap<>();
+    }
+
+    public Map<String, Integer> getUsersStorage() {
         return storage;
     }
-    public Item add(String ID, Item item) {
-        return storage.put(ID, item);
-    }
-    public Item get(String ID) {
-        return storage.get(ID);
-    }
 
+    public void add(String key) {
+        storage.computeIfPresent(key, (k, v) -> ++v);
+        storage.computeIfAbsent(key, value -> 1);
+    }
 }

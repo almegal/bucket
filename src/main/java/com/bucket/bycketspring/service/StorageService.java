@@ -1,10 +1,9 @@
 package com.bucket.bycketspring.service;
 
+import java.util.List;
 import java.util.Map;
 
-public interface StorageService<T> {
-    public T add(int ID, String productName);
-    public T get(int ID);
-    public Map<String, T> all();
-
+public interface StorageService {
+    public Map<String, Integer> add(List<Long> ids);
+    public Map<String, Integer> getUsersStorage();
 }
