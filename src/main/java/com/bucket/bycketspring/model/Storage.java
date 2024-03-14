@@ -1,6 +1,5 @@
 package com.bucket.bycketspring.model;
 
-import com.bucket.bycketspring.error.ExceptionIncorrectIDParametr;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.annotation.SessionScope;
 

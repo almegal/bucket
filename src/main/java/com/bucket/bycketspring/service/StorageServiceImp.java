@@ -3,13 +3,11 @@ package com.bucket.bycketspring.service;
 import com.bucket.bycketspring.error.ExceptionIncorrectIDParametr;
 import com.bucket.bycketspring.model.Storage;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-@SessionScope
 public class StorageServiceImp implements StorageService {
     private final Storage storage;
 
